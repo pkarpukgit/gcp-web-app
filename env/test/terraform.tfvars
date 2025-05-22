@@ -1,5 +1,0 @@
-project_id     = "scalable-web-app-460510"
-region         = "europe-central2"
-network_name   = "default"
-subnet_name    = "default"
-db_password    = "Password123*"
