@@ -26,15 +26,26 @@ module "webserver" {
   max_size             = 2
 }
 
+module "network" {
+  source = "../../modules/network"
+  network = var.network_name
+  project = var.project_id
+  
+}
+
 module "database" {
   source        = "../../modules/database"
   instance_name = "test-postgres-instance"
   region        = var.region
+  project_id    = var.project_id
   tier          = "db-f1-micro"
-  network       = data.google_compute_network.vpc_network.self_link
+  #network       = data.google_compute_network.vpc_network.self_link
+  network       = module.network.network_self_link
   db_name       = "appdb"
   db_user       = "appuser"
   db_password   = var.db_password
+
+  depends_on = [module.network]
 }
 
 module "storage" {

@@ -9,6 +9,11 @@ variable "region" {
   default     = "europe-central2"
 }
 
+variable "project_id" {
+  description = "GCP project ID"
+  type        = string
+}
+
 variable "tier" {
   description = "Cloud SQL machine type"
   type        = string

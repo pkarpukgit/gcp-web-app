@@ -1,0 +1,6 @@
+project_id     = "scalable-web-app-460510"
+region         = "europe-central2"
+network_name   = "default"
+subnet_name    = "default"
+#db password stored in secrets manager
+db_password    = "db-password"

@@ -17,6 +17,8 @@ resource "google_sql_database_instance" "postgres_instance" {
       private_network = var.network
     }
   }
+
+  deletion_protection = false
 }
 
 resource "google_sql_database" "app_db" {
@@ -24,9 +26,14 @@ resource "google_sql_database" "app_db" {
   instance = google_sql_database_instance.postgres_instance.name
 }
 
+data "google_secret_manager_secret_version_access" "db_password_access" {
+  secret = var.db_password
+  version = "latest"
+}
+
 resource "google_sql_user" "app_user" {
   name     = var.db_user
   instance = google_sql_database_instance.postgres_instance.name
-  password = var.db_password
+  password = data.google_secret_manager_secret_version_access.db_password_access.secret_data
 }
 

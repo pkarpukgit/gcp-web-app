@@ -23,7 +23,11 @@ resource "google_compute_instance_template" "web_template" {
     systemctl enable nginx
   EOF
 
-  tags = ["${var.instance_name_prefix}-tag"]
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = ["${var.instance_name_prefix}-tag","web-server"]
 }
 
 resource "google_compute_region_instance_group_manager" "web_igm" {
